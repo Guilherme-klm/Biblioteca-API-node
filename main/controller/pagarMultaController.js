@@ -1,8 +1,7 @@
 const aluguelLivrosService = require('../service/aluguelLivrosService')
-const express = require('express');
-var router = express.Router();
+const { ApiError } = require('../exception/apiError')
 
-router.patch('/alugueis/:idAluguel/pagamentos', (req, res) => {
+function pagarMulta(req, res) {
     try {
         let id = aluguelLivrosService.pagarMulta(req.params.idAluguel)
         const responseBody = `{ message: 'Multa do livro paga com sucesso!', id: ${id} }`
@@ -17,6 +16,8 @@ router.patch('/alugueis/:idAluguel/pagamentos', (req, res) => {
             .json(`{'message': ${e.message}}`)
         }
     }
-})
+}
 
-module.exports = router
+module.exports = {
+    pagarMulta
+}

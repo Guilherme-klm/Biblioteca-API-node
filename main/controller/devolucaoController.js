@@ -1,10 +1,7 @@
-const express = require('express');
-var router = express.Router();
 const devolucaoLivroService = require('../service/devolucaoLivroService')
-const {ApiError} = require('../exception/apiError')
+const { ApiError } = require('../exception/apiError')
 
-//OK
-router.patch('/devolucoes/:idAluguel', (req, res) => {
+function devolveLivro (req, res) {
     try {
         let devolucaoId = devolucaoLivroService.devolver(req.params.idAluguel)
         const responseBody = `{ message: 'Devolucao do livro feita com sucesso!', id: ${devolucaoId} }`
@@ -18,6 +15,8 @@ router.patch('/devolucoes/:idAluguel', (req, res) => {
             .json(`{'message': ${e.message}}`)
         }
     }
-})
+}
 
-module.exports = router
+module.exports = {
+    devolveLivro
+}

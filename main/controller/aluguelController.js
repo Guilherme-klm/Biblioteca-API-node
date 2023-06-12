@@ -1,24 +1,26 @@
 const aluguelLivrosService = require('../service/aluguelLivrosService')
-const express = require('express');
-var router = express.Router();
+const { ApiError } = require('../exception/apiError')
 
-//OK
-router.post('/alugueis/:idLivro', (req, res) => {
+function insereAluguel(req, res) {
     try {
         let aluguelDTO = criaAluguelDTO(req)
         let idAluguel = aluguelLivrosService.alugar(aluguelDTO)
         const responseBody = `{ message: 'Aluguel cadastrado com sucesso!', id: ${idAluguel} }`
         res.status(201).json(responseBody);
     } catch(e) {
-        res.status(e.statusCode)
-        .json(`{'message': ${e.message}}`)
+        if(e instanceof ApiError) {
+            res.status(e.statusCode)
+            .json(`{'message': ${e.message}}`)
+        } else {
+            res.status(500)
+            .json(`{'message': ${e.message}}`)
+        }
     }
-})
+}
 
-//OK
-router.get('/alugueis', (req, res) => {
+function buscaAlugueis(req, res) {
     res.json(aluguelLivrosService.todosAlugueis())
-})
+}
 
 function criaAluguelDTO(req) {
     if (req.body.idLivro == undefined || req.body.idLivro == null) {
@@ -28,4 +30,6 @@ function criaAluguelDTO(req) {
 }
 
 
-module.exports = router
+module.exports = {
+    insereAluguel, buscaAlugueis
+}
