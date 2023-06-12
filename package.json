@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node main/main.js",
     "test": "jest",
+    "coverage": "jest --coverage",
     "swagger-autogen": "node swagger.js"
   },
   "author": "",
