@@ -56,6 +56,14 @@ por um determinado nome, etc.
 2. No terminal, execute o comando para instalar todas as dependências: `npm install`
 3. Agora, para iniciar a aplicação, execute o comando: `npm start`
 
+## Autenticação
+Para poder utilizar a API corretamente, o usuario irá precisar usar o Basic Authentication.  
+Basta passar no campo username o valor `admin` e no password o valor `admin`.  
+
+- Exemplo no Postman: 
+
+![image](https://github.com/Guilherme-klm/trabalho-1-DSA/assets/57548840/2e726273-2bc9-437a-a411-d87fd1574abf)
+
 ## Testes
 Para executar os testes, utilize o seguinte comando:
 `npm test`
