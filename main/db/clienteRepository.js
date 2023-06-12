@@ -1,8 +1,4 @@
-let clientes = [{
-    matricula: 2,
-    nome: 'Guilherme Karam',
-    telefone: '51 98423-9203'
-  }]
+let clientes = []
 
 function possuiClientes() {
     return clientes.length > 0

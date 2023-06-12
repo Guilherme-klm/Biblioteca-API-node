@@ -1,8 +1,4 @@
-let autores = [{
-    id: 10,
-    nome: "Gui",
-    origem: "Brasil"
-}]
+let autores = []
 
 function temAutoresCadastrados() {
     return autores.length > 0

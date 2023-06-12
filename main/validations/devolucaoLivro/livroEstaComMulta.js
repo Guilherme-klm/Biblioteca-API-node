@@ -15,7 +15,6 @@ function calcularMulta(aluguel) {
     }
 
     const multaPorDia = 2.0;
-    // let dataDevolucao = moment("17-06-2023","DD/MM/YYYY");
     let dataDevolucao = moment().format("DD/MM/YYYY");
 
     if (dataDevolucao == aluguel.dataDevolucaoProgramado) {

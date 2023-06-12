@@ -1,26 +1,4 @@
-let alugueis = [
-    {
-        id: 23,
-        ativo: true,
-        livro: {
-          isbn: 13,
-          nome: 'livro',
-          autores: [ 10 ],
-          editora: 'editora 222',
-          anoPublicacao: '20/04/1999',
-          quantidade: 0
-        },
-        dataRetirada: '08/06/2023',
-        dataDevolucaoProgramado: '15/06/2023',
-        dataDevolucao: null,
-        multa: 0,
-        cliente: {
-          matricula: 2,
-          nome: 'Guilherme Karam',
-          telefone: '51 98423-9203'
-        }
-    }
-]
+let alugueis = []
 
 function possuiAluguel() {
     return alugueis.length > 0
@@ -31,7 +9,7 @@ function todosAlugueis() {
 }
 
 function buscaPorId(idAluguel) {
-    let aluguelSalvo = null
+    let aluguelSalvo = []
 
     if(possuiAluguel()) {
         alugueis.forEach((aluguel) => {
