@@ -39,11 +39,30 @@ de dias de atraso.
 - Buscas: buscar por livros disponíveis, livros de um autor, livros
 por um determinado nome, etc.
 
+## Dependências
+- [express@4.18.2](https://www.npmjs.com/package/express/v/4.18.2)
+- [jest@29.5.0](https://www.npmjs.com/package/jest/v/29.5.0)
+- [moment@2.29.4](https://www.npmjs.com/package/moment/v/2.29.4)
+
+## Dependências de Desenvolvimento
+- [@babel/preset-env@7.22.5](https://www.npmjs.com/package/@babel/preset-env/v/7.22.5)
+- [babel-jest@29.5.0](https://www.npmjs.com/package/babel-jest/v/29.5.0)
+- [swagger-autogen@2.23.1](https://www.npmjs.com/package/swagger-autogen/v/2.23.1)
+- [swagger-ui-express@4.1.4](https://www.npmjs.com/package/swagger-ui-express/v/4.1.4)
+
 ## Rodando a aplicação
 
 1. Primeiramente, clone o projeto: `git clone https://github.com/Guilherme-klm/trabalho-1-DSA`
 2. No terminal, execute o comando para instalar todas as dependências: `npm install`
 3. Agora, para iniciar a aplicação, execute o comando: `npm start`
+
+## Testes
+Para executar os testes, utilize o seguinte comando:
+`npm test`
+
+## Cobertura de Teste
+Para gerar um relatório de cobertura de teste, utilize o seguinte comando:
+`npm run coverage`
 
 ## Gerando a documentacao do Swagger
 1. No terminal, execute o seguinte comando: `npm run swagger-autogen`
