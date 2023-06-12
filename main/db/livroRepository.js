@@ -25,7 +25,7 @@ function buscarPorIdAutor(id) {
     let livrosDoAutor = []
 
     livros.forEach(livro => {
-        if(livro.autores.includes(id)) {
+        if(livro.autores.includes(Number(id))) {
             livrosDoAutor.push(livro)
         }
     })
@@ -34,11 +34,11 @@ function buscarPorIdAutor(id) {
 }
 
 function buscarPorNomeLivro(nomeLivro) {
-    let livroBuscadosPeloNome = null
+    let livroBuscadosPeloNome = []
 
     livros.forEach(livro => {
         if(livro.nome == nomeLivro) {
-            livroBuscadosPeloNome = livro
+            livroBuscadosPeloNome.push(livro)
         }
     })
 

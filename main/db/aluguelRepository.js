@@ -9,11 +9,11 @@ function todosAlugueis() {
 }
 
 function buscaPorId(idAluguel) {
-    let aluguelSalvo = []
+    let aluguelSalvo = null
 
     if(possuiAluguel()) {
         alugueis.forEach((aluguel) => {
-            if(aluguel.id == idAluguel) {
+            if(aluguel.id == Number(idAluguel)) {
                 aluguelSalvo = aluguel
                 return
             }

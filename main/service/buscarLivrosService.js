@@ -18,7 +18,7 @@ function porIdAutor(id) {
 function porNomeLivro(nomeLivro) {
     let livro = livroRepository.buscarPorNomeLivro(nomeLivro)
 
-    if(livro == null) {
+    if(livro.length == 0) {
         throw new RecursoNaoEncontradoError("Nao existe livro com este nome")
     }
 
