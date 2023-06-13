@@ -18,7 +18,8 @@ router.post('/clientes', verificarLogin, ClienteController.insereCliente)
 router.patch('/devolucoes/:idAluguel', verificarLogin, DevolucaoController.devolveLivro)
 router.get('/livros', verificarLogin, LivroController.buscaLivros)
 router.get('/livros/autores/:idAutor',verificarLogin, LivroController.buscaLivroPorIdAutor)
-router.get('/livros/:nome', verificarLogin, LivroController.buscaLivrosPorNome)
+router.get('/livros/disponiveis', verificarLogin, LivroController.buscaLivrosDisponiveis)
+router.get('/livros/nome/:nome', verificarLogin, LivroController.buscaLivrosPorNome)
 router.post('/livros', verificarLogin, LivroController.insereLivro)
 
 module.exports = router

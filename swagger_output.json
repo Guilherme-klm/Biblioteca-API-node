@@ -476,7 +476,53 @@
         ]
       }
     },
-    "/livros/{nome}": {
+    "/livros/disponiveis": {
+      "get": {
+        "tags": [
+          "Livros"
+        ],
+        "description": "Busca todos os livros que estao disponiveis para ser alugado",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso ao buscar os livros",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/LivroDTO"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Falta das credenciais de autenticacao ou credenciais invalidas",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
+          },
+          "500": {
+            "description": "Servidor encontrou algum problema interno",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
+          }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
+      }
+    },
+    "/livros/nome/{nome}": {
       "get": {
         "tags": [
           "Livros"

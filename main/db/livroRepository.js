@@ -4,6 +4,18 @@ function temLivrosCadastrados() {
     return livros.length > 0
 }
 
+function buscaLivrosDisponiveis() {
+    let livrosDisponiveis = []
+
+    livros.forEach(livro => {
+        if (livro.quantidade > 0) {
+            livrosDisponiveis.push(livro)
+        }
+    })
+
+    return livrosDisponiveis
+}
+
 function buscarTodosLivros() {
     return livros
 }
@@ -84,5 +96,5 @@ function inserir(newLivro) {
 }
 
 module.exports = {
-    temLivrosCadastrados, existeLivro, inserir, buscarTodosLivros, buscarPorIdAutor, buscarPorNomeLivro, buscarPorIdLivro
+    temLivrosCadastrados, existeLivro, inserir, buscarTodosLivros, buscarPorIdAutor, buscarPorNomeLivro, buscarPorIdLivro, buscaLivrosDisponiveis
 }

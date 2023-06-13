@@ -2,6 +2,31 @@ const cadastroLivroService = require('../service/cadastroLivroService')
 const bucarLivros = require('../service/buscarLivrosService')
 const { ApiError } = require('../exception/apiError')
 
+function buscaLivrosDisponiveis(req, res) {
+    // #swagger.tags = ['Livros']
+    // #swagger.description = 'Busca todos os livros que estao disponiveis para ser alugado'
+    /* #swagger.responses[200] = {
+            description: 'Sucesso ao buscar os livros',
+            schema: [{ $ref: '#/definitions/LivroDTO' }]
+    } */
+    /* #swagger.responses[500] = {
+            description: 'Servidor encontrou algum problema interno',
+            schema: { $ref: '#/definitions/MessageDTO' }
+    } */
+
+    try {
+        res.json(bucarLivros.buscaLivrosDisponiveis())
+    } catch(e) {
+        if(e instanceof ApiError) {
+            res.status(e.statusCode)
+            .json(`{'message': ${e.message}}`)
+        } else {
+            res.status(500)
+            .json(`{'message': ${e.message}}`)
+        }
+    }
+}
+
 function buscaLivros(req, res) {
     // #swagger.tags = ['Livros']
     // #swagger.description = 'Busca todos os livros cadastrados'
@@ -113,5 +138,5 @@ function insereLivro(req, res) {
 }
 
 module.exports = {
-    buscaLivros, buscaLivroPorIdAutor, buscaLivrosPorNome, insereLivro
+    buscaLivros, buscaLivroPorIdAutor, buscaLivrosPorNome, insereLivro, buscaLivrosDisponiveis
 }

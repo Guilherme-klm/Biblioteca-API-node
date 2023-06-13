@@ -5,6 +5,10 @@ function todos () {
     return livroRepository.buscarTodosLivros()
 }
 
+function buscaLivrosDisponiveis() {
+    return livroRepository.buscaLivrosDisponiveis()
+}
+
 function porIdAutor(id) {
     let livros = livroRepository.buscarPorIdAutor(id)
     
@@ -26,5 +30,5 @@ function porNomeLivro(nomeLivro) {
 }
 
 module.exports = {
-    todos, porIdAutor, porNomeLivro
+    todos, porIdAutor, porNomeLivro, buscaLivrosDisponiveis
 }
