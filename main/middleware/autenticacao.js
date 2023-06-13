@@ -1,6 +1,14 @@
 const usuarioRepository = require('../db/usuarioRepository');
 
 function verificarLogin(req, res, next) {
+    /* #swagger.security = [{
+            "basicAuth": []
+    }] */
+    /* #swagger.responses[401] = {
+            description: 'Falta das credenciais de autenticacao ou credenciais invalidas',
+            schema: { $ref: '#/definitions/MessageDTO' }
+    } */
+    
     const authheader = req.headers.authorization;
 
     if (!authheader) {

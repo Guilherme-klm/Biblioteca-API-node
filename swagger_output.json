@@ -2,179 +2,695 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "REST API",
-    "description": ""
+    "title": "Biblioteca API",
+    "description": "Documentacao detalhada dos endpoints e models"
   },
   "host": "localhost:3000",
   "basePath": "/",
+  "tags": [
+    {
+      "name": "Livros",
+      "description": "Busca e insercao de livros"
+    },
+    {
+      "name": "Alugueis",
+      "description": "Busca e devolucao de alugueis"
+    },
+    {
+      "name": "Pagamentos",
+      "description": "Pagamento multas de alugueis"
+    },
+    {
+      "name": "Autores",
+      "description": "Insere autores"
+    },
+    {
+      "name": "Clientes",
+      "description": "Insere clientes"
+    }
+  ],
   "schemes": [
     "http"
+  ],
+  "securityDefinitions": {
+    "basicAuth": {
+      "type": "basic"
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
   ],
   "paths": {
     "/alugueis/{idLivro}": {
       "post": {
-        "description": "",
+        "tags": [
+          "Alugueis"
+        ],
+        "description": "Cadastra aluguel",
         "parameters": [
           {
             "name": "idLivro",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "livroDTI",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AluguelDTI"
+            }
           }
         ],
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Sucesso ao cadastrar aluguel",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
+          },
+          "401": {
+            "description": "Falta das credenciais de autenticacao ou credenciais invalidas",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Servidor encontrou algum problema interno",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
           }
-        }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
       }
     },
     "/alugueis": {
       "get": {
-        "description": "",
-        "parameters": [],
+        "tags": [
+          "Alugueis"
+        ],
+        "description": "Cadastra aluguel",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Sucesso ao buscar todos os alugueis",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AluguelDTO"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Falta das credenciais de autenticacao ou credenciais invalidas",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
+          },
+          "500": {
+            "description": "Servidor encontrou algum problema interno",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
           }
-        }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
       }
     },
     "/alugueis/{idAluguel}/pagamentos": {
       "patch": {
-        "description": "",
+        "tags": [
+          "Pagamentos"
+        ],
+        "description": "Pagamento da multa do aluguel",
         "parameters": [
           {
             "name": "idAluguel",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Sucesso ao pagar a multa do aluguel",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
+          },
+          "401": {
+            "description": "Falta das credenciais de autenticacao ou credenciais invalidas",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Servidor encontrou algum problema interno",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
           }
-        }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
       }
     },
     "/autores": {
       "post": {
-        "description": "",
-        "parameters": [],
+        "tags": [
+          "Autores"
+        ],
+        "description": "Cadastra autor",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "autorDTI",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AutorDTI"
+            }
+          }
+        ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "201": {
+            "description": "Sucesso ao cadastrar autor",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
+          },
+          "401": {
+            "description": "Falta das credenciais de autenticacao ou credenciais invalidas",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Servidor encontrou algum problema interno",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
           }
-        }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
       }
     },
     "/clientes": {
       "post": {
-        "description": "",
-        "parameters": [],
+        "tags": [
+          "Clientes"
+        ],
+        "description": "Cadastra cliente",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "clienteDTI",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ClienteDTI"
+            }
+          }
+        ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "201": {
+            "description": "Sucesso ao cadastrar cliente",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
+          },
+          "401": {
+            "description": "Falta das credenciais de autenticacao ou credenciais invalidas",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Servidor encontrou algum problema interno",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
           }
-        }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
       }
     },
     "/devolucoes/{idAluguel}": {
       "patch": {
-        "description": "",
+        "tags": [
+          "Alugueis"
+        ],
+        "description": "Devolucao do livro",
         "parameters": [
           {
             "name": "idAluguel",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Sucesso ao devolver novo livro",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
+          },
+          "401": {
+            "description": "Falta das credenciais de autenticacao ou credenciais invalidas",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Servidor encontrou algum problema interno",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
           }
-        }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
       }
     },
     "/livros": {
       "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
+        "tags": [
+          "Livros"
+        ],
+        "description": "Busca todos os livros cadastrados",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
-        }
-      },
-      "post": {
-        "description": "",
-        "parameters": [],
+        ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Sucesso ao buscar todos os livros",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/LivroDTO"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Falta das credenciais de autenticacao ou credenciais invalidas",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Servidor encontrou algum problema interno",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
           }
-        }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Livros"
+        ],
+        "description": "Cadastra livro",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "livroDTI",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LivroDTI"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Sucesso ao cadastrar novo livro",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
+          },
+          "401": {
+            "description": "Falta das credenciais de autenticacao ou credenciais invalidas",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
+          },
+          "500": {
+            "description": "Servidor encontrou algum problema interno",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
+          }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
       }
     },
     "/livros/autores/{idAutor}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Livros"
+        ],
+        "description": "Busca os livros atraves do ID do autor passado como parametro da URL",
         "parameters": [
           {
             "name": "idAutor",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Sucesso ao buscar os livros do autor",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/LivroDTO"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Falta das credenciais de autenticacao ou credenciais invalidas",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Servidor encontrou algum problema interno",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
           }
-        }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
       }
     },
     "/livros/{nome}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Livros"
+        ],
+        "description": "Busca os livros atraves do nome do livro passado como parametro da URL",
         "parameters": [
           {
             "name": "nome",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Sucesso ao buscar livros pelo nome",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/LivroDTO"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Falta das credenciais de autenticacao ou credenciais invalidas",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Servidor encontrou algum problema interno",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
           }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "LivroDTO": {
+      "type": "object",
+      "properties": {
+        "isbn": {
+          "type": "number",
+          "example": 1
+        },
+        "nome": {
+          "type": "string",
+          "example": "Harry Potter"
+        },
+        "autores": {
+          "type": "array",
+          "example": [
+            1,
+            2,
+            3
+          ],
+          "items": {
+            "type": "number"
+          }
+        },
+        "editora": {
+          "type": "string",
+          "example": "Editora ABC"
+        },
+        "anoPublicacao": {
+          "type": "string",
+          "example": "01/01/2030"
+        },
+        "quantidade": {
+          "type": "number",
+          "example": 5
+        }
+      }
+    },
+    "LivroDTI": {
+      "type": "object",
+      "properties": {
+        "nome": {
+          "type": "string",
+          "example": "Harry Potter"
+        },
+        "autores": {
+          "type": "array",
+          "example": [
+            1,
+            2,
+            3
+          ],
+          "items": {
+            "type": "number"
+          }
+        },
+        "editora": {
+          "type": "string",
+          "example": "Editora ABC"
+        },
+        "anoPublicacao": {
+          "type": "string",
+          "example": "01/01/2030"
+        },
+        "quantidade": {
+          "type": "number",
+          "example": 5
+        }
+      }
+    },
+    "AutorDTI": {
+      "type": "object",
+      "properties": {
+        "nome": {
+          "type": "string",
+          "example": "Marcio Alvez"
+        },
+        "origem": {
+          "type": "string",
+          "example": "Brasil"
+        }
+      }
+    },
+    "MessageDTO": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "mensagem"
+        }
+      }
+    },
+    "ClienteDTO": {
+      "type": "object",
+      "properties": {
+        "matricula": {
+          "type": "number",
+          "example": 1
+        },
+        "nome": {
+          "type": "string",
+          "example": "Alberto"
+        },
+        "telefone": {
+          "type": "string",
+          "example": "51 984630283"
+        }
+      }
+    },
+    "ClienteDTI": {
+      "type": "object",
+      "properties": {
+        "nome": {
+          "type": "string",
+          "example": "Alberto"
+        },
+        "telefone": {
+          "type": "string",
+          "example": "51 984630283"
+        }
+      }
+    },
+    "AluguelDTI": {
+      "type": "object",
+      "properties": {
+        "matricula": {
+          "type": "number",
+          "example": 1
+        }
+      }
+    },
+    "AluguelDTO": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "example": 1
+        },
+        "ativo": {
+          "type": "boolean",
+          "example": true
+        },
+        "livro": {
+          "$ref": "#/definitions/LivroDTO"
+        },
+        "dataRetirada": {
+          "type": "string",
+          "example": "01/01/2050"
+        },
+        "dataDevolucaoProgramado": {
+          "type": "string",
+          "example": "08/01/2050"
+        },
+        "dataDevolucao": {
+          "type": "string",
+          "example": "05/01/2050"
+        },
+        "multa": {
+          "type": "number",
+          "example": 0
+        },
+        "cliente": {
+          "$ref": "#/definitions/ClienteDTO"
         }
       }
     }

@@ -2,6 +2,16 @@ const aluguelLivrosService = require('../service/aluguelLivrosService')
 const { ApiError } = require('../exception/apiError')
 
 function pagarMulta(req, res) {
+    // #swagger.tags = ['Pagamentos']
+    // #swagger.description = 'Pagamento da multa do aluguel'
+    /* #swagger.responses[200] = {
+            description: 'Sucesso ao pagar a multa do aluguel',
+            schema: { $ref: '#/definitions/MessageDTO' }
+    } */
+    /* #swagger.responses[500] = {
+            description: 'Servidor encontrou algum problema interno',
+            schema: { $ref: '#/definitions/MessageDTO' }
+    } */
     try {
         let id = aluguelLivrosService.pagarMulta(req.params.idAluguel)
         const responseBody = `{ message: 'Multa do livro paga com sucesso!', id: ${id} }`
