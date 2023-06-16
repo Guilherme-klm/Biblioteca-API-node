@@ -13,7 +13,7 @@ function converter (novoAutor) {
 }
 
 function buildNome(novoNome) {
-    if(novoNome == "") {
+    if(novoNome == "" || novoNome == null) {
         throw new RecursoNaoEncontradoError("Nome do autor é obrigatorio")
     }
     
@@ -21,7 +21,7 @@ function buildNome(novoNome) {
 }
 
 function buildOrigem(novaOrigem) {
-    if(novaOrigem == "") {
+    if(novaOrigem == "" || novaOrigem == null) {
         throw new RecursoNaoEncontradoError("Origem do autor é obrigatorio")
     }
     

@@ -68,7 +68,7 @@ function buildEditora(editora) {
         throw new CustomTypeError("Atributo editora precisa ser do tipo string")
     }
 
-    if(editora == undefined || editora == "") {
+    if(editora == "") {
         throw new RecursoNaoEncontradoError("Editora do livro é obrigatorio")
     }
     
@@ -80,7 +80,7 @@ function buildAnoPublicacao(anoPublicacao) {
         throw new CustomTypeError("Atributo anoPublicacao precisa ser do tipo string")
     }
 
-    if(anoPublicacao == undefined || anoPublicacao == "") {
+    if(anoPublicacao == "") {
         throw new RecursoNaoEncontradoError("Ano publicacao do livro é obrigatorio")
     }
     
@@ -92,8 +92,8 @@ function buildQuantidade(quantidade) {
         throw new CustomTypeError("Atributo quantidade precisa ser do tipo inteiro")
     }
 
-    if(quantidade == undefined || quantidade == 0) {
-        throw new RecursoNaoEncontradoError("Quantidade do livro é obrigatorio")
+    if(quantidade == 0) {
+        throw new RecursoNaoEncontradoError("Quantidade do livro nao pode ser 0")
     }
     
     return quantidade

@@ -22,7 +22,7 @@ function buildNome(nome) {
 
 function buildTelefone(telefone) {
     if(telefone == null || telefone == "") {
-        throw new RecursoNaoEncontradoError("Nome do cliente é obrigatorio")
+        throw new RecursoNaoEncontradoError("Telefone do cliente é obrigatorio")
     }
     
     return telefone
