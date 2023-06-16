@@ -51,10 +51,15 @@ por um determinado nome, etc.
 - [swagger-ui-express@4.1.4](https://www.npmjs.com/package/swagger-ui-express/v/4.1.4)
 
 ## Rodando a aplicação
-
+### Na própria maquina
 1. Primeiramente, clone o projeto: `git clone https://github.com/Guilherme-klm/trabalho-1-DSA`
 2. No terminal, execute o comando para instalar todas as dependências: `npm install`
 3. Agora, para iniciar a aplicação, execute o comando: `npm start`
+
+### Docker
+1. Primeiramente, clone o projeto: `git clone https://github.com/Guilherme-klm/trabalho-1-DSA`
+2. No terminal, execute o comando `docker build . -t <seu_usuario>/biblioteca-api`
+3. Agora, para iniciar a aplicação, execute o comando: `docker docker run -p 3000:3000 <seu_usuario>/biblioteca-api`
 
 ## Autenticação
 Para poder utilizar a API corretamente, o usuario irá precisar usar o Basic Authentication.  
