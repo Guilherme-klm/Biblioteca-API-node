@@ -4,6 +4,10 @@ function temAutoresCadastrados() {
     return autores.length > 0
 }
 
+function mockAutores(mockAutores) {
+    autores = mockAutores
+}
+
 function inserir(newAutor) {
     newAutor.id = Math.floor(Math.random() * 100);
     autores.push(newAutor)
@@ -11,15 +15,15 @@ function inserir(newAutor) {
 }
 
 function naoExisteAutor(idAutor) {
-    if (autores.length == 0) {
-        false
+    if (!temAutoresCadastrados()) {
+        return false
     }
     
     return !autores.map(autor => autor.id).includes(idAutor)
 }
 
 function existeAutor(novoAutor) {
-    if(autores.length == 0) {
+    if(!temAutoresCadastrados()) {
         return false
     }
 
@@ -36,5 +40,5 @@ function existeAutor(novoAutor) {
 }
 
 module.exports = {
-    existeAutor, temAutoresCadastrados, inserir, naoExisteAutor
+    existeAutor, temAutoresCadastrados, inserir, naoExisteAutor, mockAutores
 }

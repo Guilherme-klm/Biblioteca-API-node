@@ -6,14 +6,13 @@ let usuarios = [{
 function existeUsuario(credencias) {
     let existeUsuario = false
 
-    if(usuarios.length > 0) {
-        usuarios.forEach(usuario => {
-            if(usuario.username == credencias.username && usuario.password == credencias.password) {
-                existeUsuario = true
-                return
-            }
-        });
-    }
+    usuarios.forEach(usuario => {
+        if(usuario.username == credencias.username && usuario.password == credencias.password) {
+            existeUsuario = true
+            return
+        }
+    });
+    
     return existeUsuario
 }
 

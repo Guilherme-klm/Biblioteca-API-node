@@ -4,6 +4,10 @@ function temLivrosCadastrados() {
     return livros.length > 0
 }
 
+function mockLivros(mockLivros) {
+    livros = mockLivros
+}
+
 function buscaLivrosDisponiveis() {
     let livrosDisponiveis = []
 
@@ -24,7 +28,7 @@ function buscarPorIdLivro(idLivro) {
     let livroBase = null
 
     livros.forEach(livro => {
-        if(livro.id == idLivro) {
+        if(livro.isbn == idLivro) {
             livroBase = livro
             return
         }
@@ -96,5 +100,5 @@ function inserir(newLivro) {
 }
 
 module.exports = {
-    temLivrosCadastrados, existeLivro, inserir, buscarTodosLivros, buscarPorIdAutor, buscarPorNomeLivro, buscarPorIdLivro, buscaLivrosDisponiveis
+    temLivrosCadastrados, existeLivro, inserir, buscarTodosLivros, buscarPorIdAutor, buscarPorNomeLivro, buscarPorIdLivro, buscaLivrosDisponiveis, mockLivros
 }

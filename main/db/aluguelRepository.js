@@ -4,6 +4,10 @@ function possuiAluguel() {
     return alugueis.length > 0
 }
 
+function mockAlugueis(mockAlugueis) {
+    alugueis = mockAlugueis
+}
+
 function todosAlugueis() {
     return alugueis
 }
@@ -43,5 +47,5 @@ function alugar(aluguel) {
 }
 
 module.exports = {
-    alugar, buscaPorMatricula, possuiAluguel, buscaPorId, todosAlugueis
+    alugar, buscaPorMatricula, possuiAluguel, buscaPorId, todosAlugueis, mockAlugueis
 }

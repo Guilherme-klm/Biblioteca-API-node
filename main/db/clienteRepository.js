@@ -4,6 +4,10 @@ function possuiClientes() {
     return clientes.length > 0
 }
 
+function mockClientes(mockClientes) {
+    clientes = mockClientes
+}
+
 function existeCliente(cliente) {
     let clienteSalvo = buscaCliente(cliente)
     if (clienteSalvo != null) {
@@ -50,5 +54,5 @@ function inserir(newCliente) {
 }
 
 module.exports = {
-    buscaClientePorMatricula, inserir, existeCliente
+    buscaClientePorMatricula, inserir, existeCliente, mockClientes, possuiClientes, buscaCliente
 }
