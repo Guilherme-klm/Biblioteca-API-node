@@ -43,6 +43,8 @@ por um determinado nome, etc.
 - [express@4.18.2](https://www.npmjs.com/package/express/v/4.18.2)
 - [jest@29.5.0](https://www.npmjs.com/package/jest/v/29.5.0)
 - [moment@2.29.4](https://www.npmjs.com/package/moment/v/2.29.4)
+- [pg@8.11.1](https://www.npmjs.com/package/pg/v/8.11.1)
+- [pg-format@1.0.4](https://www.npmjs.com/package/pg-format/v/1.0.4)
 
 ## Dependências de Desenvolvimento
 - [@babel/preset-env@7.22.5](https://www.npmjs.com/package/@babel/preset-env/v/7.22.5)
