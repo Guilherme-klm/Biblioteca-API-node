@@ -5,14 +5,14 @@ const { RecursoDuplicadoError } = require('../exception/recursoDuplicadoError')
 const { RecursoNaoEncontradoError } = require('../exception/recursoNaoEncontradoError')
 const { CustomTypeError } = require('../exception/customTypeError')
 
-function converterToDomain(newLivro) {
+async function converterToDomain(newLivro) {
     let nome = buildNome(newLivro.nome)
-    let autores = buildAutores(newLivro.autores)
+    let autores = await buildAutores(newLivro.autores)
     let editora = buildEditora(newLivro.editora)
     let anoPublicacao = buildAnoPublicacao(newLivro.anoPublicacao)
     let quantidade = buildQuantidade(newLivro.quantidade)
 
-    existeLivro(newLivro)
+    await existeLivro(newLivro)
 
     return new Livro(nome, autores, editora, anoPublicacao, quantidade)
 }
@@ -29,7 +29,7 @@ function buildNome(nome) {
     return nome
 }
 
-function buildAutores(autores) {
+async function buildAutores(autores) {
     if (!Array.isArray(autores)) {
         throw new CustomTypeError("Atributo autores precisa ser do tipo lista de inteiros")
     }
@@ -46,19 +46,20 @@ function buildAutores(autores) {
         throw new CustomTypeError("Id do autor precisa ser do tipo numero")
     }
 
-    let algumAutorNaoExistente = false
-
-    autores.forEach(autorId => {
-        if(autorRepository.naoExisteAutor(autorId)) {
-            algumAutorNaoExistente = true
-            return
+    const algumAutorNaoExistente = async () => {
+        for await (const autorId of autores) {
+            let naoExisteAutor = await autorRepository.naoExisteAutor(autorId)
+            
+            if(naoExisteAutor) {
+                return true
+            }
         }
-    })
-
-    if(algumAutorNaoExistente) {
-        throw new RecursoNaoEncontradoError("Autor(es) nao existe(m), verifique se esta passando os Id(s) corretos")
+        return false
     }
 
+    if (await algumAutorNaoExistente()) {
+        throw new RecursoNaoEncontradoError("Autor(es) nao existe(m), verifique se esta passando os Id(s) corretos")
+    }
     
     return autores
 }
@@ -99,13 +100,11 @@ function buildQuantidade(quantidade) {
     return quantidade
 }
 
-function existeLivro(newLivro) {
-    if (livroRepository.temLivrosCadastrados()) {
-        let livroEstaCadastrado = livroRepository.existeLivro(newLivro)
-        
-        if(livroEstaCadastrado) {
-            throw new RecursoDuplicadoError('Livro ja cadastrado', 400)
-        }
+async function existeLivro(newLivro) {
+    let livroEstaCadastrado = await livroRepository.existeLivro(newLivro)
+    
+    if(livroEstaCadastrado) {
+        throw new RecursoDuplicadoError('Livro ja cadastrado', 400)
     }
 }
 

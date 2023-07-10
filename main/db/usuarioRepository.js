@@ -1,21 +1,20 @@
-let usuarios = [{
-    username: "admin",
-    password: "admin"
-}]
+const dbConfig = require('./dbConfig');
 
-function existeUsuario(credencias) {
-    let existeUsuario = false
-
-    usuarios.forEach(usuario => {
-        if(usuario.username == credencias.username && usuario.password == credencias.password) {
-            existeUsuario = true
-            return
-        }
-    });
+async function existeUsuario(credenciais) {
+    let client = await dbConfig.connect()
+    let result = await client.query(
+        "select usr_nome, usr_senha from usuario where usr_nome= $1 and usr_senha= $2", 
+        [credenciais.username, credenciais.password])
     
-    return existeUsuario
+    client.release()
+    
+    if(result.rows.length == 0) {
+        return false
+    }
+
+    return true
 }
 
-module.exports = {
+module.exports = { 
     existeUsuario
 }

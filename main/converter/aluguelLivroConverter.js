@@ -4,23 +4,22 @@ const { Aluguel } = require('../domain/aluguel');
 const { RecursoNaoEncontradoError } = require('../exception/recursoNaoEncontradoError')
 var moment = require('moment');
 
-function converter (aluguel) {
-    let livro = buildLivro(aluguel.idLivro)
+async function converter (aluguel) {
+    let livro = await buildLivro(aluguel.idLivro)
     let dataRetirada = buildDataRetirada()
     let dataDevolucaoProgramado = buildDataDevolucaoProgramado()
-    let cliente = buildCliente(aluguel.matricula)
+    let cliente = await buildCliente(aluguel.matricula)
 
     return new Aluguel(true, livro, dataRetirada, dataDevolucaoProgramado, cliente)
 }
 
-function buildLivro(idLivro) {
-    if (livroRepository.temLivrosCadastrados()) {
-        let livro = livroRepository.buscarPorIdLivro(idLivro)
-
-        if (livro != null) {
-            return livro
-        }
+async function buildLivro(idLivro) {
+    let livro = await livroRepository.buscarPorIdLivro(idLivro)
+    
+    if (livro != null) {
+        return livro
     }
+    
     throw new RecursoNaoEncontradoError("Livro nao existe")
 }
 
@@ -34,8 +33,8 @@ function buildDataDevolucaoProgramado() {
     return dataDevolucaoProgramado
 }
 
-function buildCliente(matriculaCliente) {
-    let cliente = clienteRepository.buscaClientePorMatricula(matriculaCliente)
+async function buildCliente(matriculaCliente) {
+    let cliente = await clienteRepository.buscaClientePorMatricula(matriculaCliente)
 
     if (cliente != null) {
         return cliente

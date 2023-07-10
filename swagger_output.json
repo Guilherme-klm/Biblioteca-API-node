@@ -44,19 +44,13 @@
     "application/json"
   ],
   "paths": {
-    "/alugueis/{idLivro}": {
+    "/alugueis": {
       "post": {
         "tags": [
           "Alugueis"
         ],
         "description": "Cadastra aluguel",
         "parameters": [
-          {
-            "name": "idLivro",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "authorization",
             "in": "header",
@@ -96,9 +90,7 @@
             "basicAuth": []
           }
         ]
-      }
-    },
-    "/alugueis": {
+      },
       "get": {
         "tags": [
           "Alugueis"
@@ -699,6 +691,10 @@
     "AluguelDTI": {
       "type": "object",
       "properties": {
+        "idLivro": {
+          "type": "number",
+          "example": 1
+        },
         "matricula": {
           "type": "number",
           "example": 1

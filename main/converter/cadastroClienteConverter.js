@@ -3,11 +3,11 @@ const { RecursoNaoEncontradoError } = require('../exception/recursoNaoEncontrado
 const { RecursoDuplicadoError } = require('../exception/recursoDuplicadoError')
 const clienteRepository = require('../db/clienteRepository')
 
-function converter(novoCliente) {
+async function converter(novoCliente) {
     let nome = buildNome(novoCliente.nome)
     let telefone = buildTelefone(novoCliente.telefone)
 
-    existeCliente(novoCliente)
+    await existeCliente(novoCliente)
 
     return new Cliente(nome, telefone)
 }
@@ -28,8 +28,8 @@ function buildTelefone(telefone) {
     return telefone
 }
 
-function existeCliente(cliente) {
-    let clienteEstaCadastrado = clienteRepository.existeCliente(cliente)
+async function existeCliente(cliente) {
+    let clienteEstaCadastrado = await clienteRepository.existeCliente(cliente)
 
     if(clienteEstaCadastrado) {
         throw new RecursoDuplicadoError('Cliente ja cadastrado', 400)

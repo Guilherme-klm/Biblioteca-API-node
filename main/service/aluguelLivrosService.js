@@ -4,25 +4,24 @@ const { RecursoNaoEncontradoError } = require('../exception/recursoNaoEncontrado
 const { PagarMultaError } = require('../exception/pagarMultaError')
 const aluguelLivroValidations = require('../validations/aluguelLivro/aluguelValidations');
 
-function alugar(aluguelDTO) {
-    let aluguelNovo = aluguelLivroConverter.converter(aluguelDTO)
-    aluguelLivroValidations.validar(aluguelNovo)
-    let idGerado = aluguelLivroRepository.alugar(aluguelNovo)
+async function alugar(aluguelDTO) {
+    let aluguelNovo = await aluguelLivroConverter.converter(aluguelDTO)
+    await aluguelLivroValidations.validar(aluguelNovo)
+    let idGerado = await aluguelLivroRepository.alugar(aluguelNovo)
     return idGerado
 }
 
-function todosAlugueis() {
-    return aluguelLivroRepository.todosAlugueis()
+async function todosAlugueis() {
+    return await aluguelLivroRepository.todosAlugueis()
 }
 
-function pagarMulta(idAluguel) {
-    let aluguel = aluguelLivroRepository.buscaPorId(idAluguel)
+async function pagarMulta(idAluguel) {
+    let aluguel = await aluguelLivroRepository.buscaPorId(idAluguel)
 
     if(aluguel != null) {
-        if(aluguel.ativo && aluguel.multa > 0) {
-            aluguel.multa = 0
-            aluguel.multaPaga = true
-            return aluguel.id
+        if(aluguel.alu_ativo && aluguel.alu_multa > 0) {
+            await aluguelLivroRepository.pagarMulta(idAluguel)
+            return aluguel.alu_id
         } else {
             throw new PagarMultaError("Este aluguel nao tem multa para pagar")
         }

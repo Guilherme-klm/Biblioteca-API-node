@@ -1,7 +1,7 @@
 const cadastroAutorService = require('../service/cadastroAutorService')
 const { ApiError } = require('../exception/apiError')
 
-function insereAutor(req, res) {
+async function insereAutor(req, res) {
     // #swagger.tags = ['Autores']
     // #swagger.description = 'Cadastra autor'
      /* #swagger.parameters['autorDTI'] = {
@@ -19,7 +19,7 @@ function insereAutor(req, res) {
     } */
     try {
         let novoAutor = req.body
-        let idGerado = cadastroAutorService.cadastrar(novoAutor)
+        let idGerado = await cadastroAutorService.cadastrar(novoAutor)
         let responseBody = `{ message: 'Autor cadastrado com sucesso!', id: ${idGerado} }`
         res.status(201).json(responseBody);
     } catch(e) {

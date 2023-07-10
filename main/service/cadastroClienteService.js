@@ -1,9 +1,9 @@
 const cadastroClienteConverter = require('../converter/cadastroClienteConverter')
 const clienteRepository = require('../db/clienteRepository')
 
-function cadastrar(newCliente) {
-    let cliente = cadastroClienteConverter.converter(newCliente)
-    let id = clienteRepository.inserir(cliente)
+async function cadastrar(newCliente) {
+    let cliente = await cadastroClienteConverter.converter(newCliente)
+    let id = await clienteRepository.inserir(cliente)
     return id
 }
 

@@ -7,7 +7,7 @@ function validar(aluguel) {
 }
 
 function livroNaoEstaDisponivelParaAlugar(aluguel) {
-    return aluguel.livro.quantidade == 0
+    return aluguel.livro.lvr_quantidade == 0
 }
 
 module.exports = {

@@ -1,16 +1,16 @@
 const livroRepository = require('../db/livroRepository')
 const { RecursoNaoEncontradoError } = require('../exception/recursoNaoEncontradoError')
 
-function todos () {
-    return livroRepository.buscarTodosLivros()
+async function todos () {
+    return await livroRepository.buscarTodosLivros()
 }
 
-function buscaLivrosDisponiveis() {
-    return livroRepository.buscaLivrosDisponiveis()
+async function buscaLivrosDisponiveis() {
+    return await livroRepository.buscaLivrosDisponiveis()
 }
 
-function porIdAutor(id) {
-    let livros = livroRepository.buscarPorIdAutor(id)
+async function porIdAutor(id) {
+    let livros = await livroRepository.buscarPorIdAutor(id)
     
     if(livros.length == 0) {
         throw new RecursoNaoEncontradoError("Nao existem livros com este autor")
@@ -19,8 +19,8 @@ function porIdAutor(id) {
     return livros
 }
 
-function porNomeLivro(nomeLivro) {
-    let livro = livroRepository.buscarPorNomeLivro(nomeLivro)
+async function porNomeLivro(nomeLivro) {
+    let livro = await livroRepository.buscarPorNomeLivro(nomeLivro)
 
     if(livro.length == 0) {
         throw new RecursoNaoEncontradoError("Nao existe livro com este nome")

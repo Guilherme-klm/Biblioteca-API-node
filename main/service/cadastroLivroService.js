@@ -1,9 +1,9 @@
 const cadastroLivroConverter = require('../converter/cadastroLivroConverter')
 const livroRepository = require('../db/livroRepository')
 
-function cadastrar(newLivro) {
-    let livro = cadastroLivroConverter.converterToDomain(newLivro)
-    let isbn = livroRepository.inserir(livro)
+async function cadastrar(newLivro) {
+    let livro = await cadastroLivroConverter.converterToDomain(newLivro)
+    let isbn = await livroRepository.inserir(livro)
     return isbn
 }
 

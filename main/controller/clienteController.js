@@ -1,7 +1,7 @@
 const cadastroClienteService = require('../service/cadastroClienteService')
 const { ApiError } = require('../exception/apiError')
 
-function insereCliente (req, res) {
+async function insereCliente (req, res) {
     // #swagger.tags = ['Clientes']
     // #swagger.description = 'Cadastra cliente'
     /* #swagger.parameters['clienteDTI'] = {
@@ -19,7 +19,7 @@ function insereCliente (req, res) {
     } */
     try {
         let novoCliente = req.body
-        let idGerado = cadastroClienteService.cadastrar(novoCliente)
+        let idGerado = await cadastroClienteService.cadastrar(novoCliente)
         const responseBody = `{ message: 'Cliente cadastrado com sucesso!', id: ${idGerado} }`
         res.status(201).json(responseBody);
     } catch (e) {

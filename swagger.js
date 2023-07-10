@@ -75,6 +75,7 @@ const doc = {
             telefone: "51 984630283"   
         },
         AluguelDTI: {
+            idLivro: 1,
             matricula: 1
         },
         AluguelDTO: {

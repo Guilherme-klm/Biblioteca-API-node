@@ -1,24 +1,21 @@
 const aluguelLivroRepository = require('../db/aluguelRepository');
 const { RecursoNaoEncontradoError } = require('../exception/recursoNaoEncontradoError');
 const devolucaoValidations = require('../validations/devolucaoLivro/devolucaoValidations');
-var moment = require('moment');
 
-function devolver(idAluguel) {
-    let aluguel = aluguelLivroRepository.buscaPorId(idAluguel)
+async function devolver(idAluguel) {
+    let aluguel = await aluguelLivroRepository.buscaPorId(idAluguel)
     
     if(aluguel == null) {
         throw new RecursoNaoEncontradoError("Aluguel nao existe")
     }
     
-    devolucaoValidations.validar(aluguel)
-    devolverLivro(aluguel)
-    return aluguel.id
+    await devolucaoValidations.validar(aluguel)
+    await devolverLivro(aluguel)
+    return aluguel.alu_id
 }
 
-function devolverLivro(aluguel) {
-    aluguel.dataDevolucao = moment().format("DD/MM/YYYY");
-    aluguel.ativo = false
-    aluguel.livro.quantidade += 1
+async function devolverLivro(aluguel) {
+    await aluguelLivroRepository.devolverLivro(aluguel)
 }
 
 module.exports = {

@@ -2,13 +2,10 @@ const clienteAlugouTresLivros = require('./clienteAlugouTresLivros');
 const livroNaoEstaDisponivel = require('./livroNaoEstaDisponivel');
 const alugarLivroJaAlugadoPeloCliente = require('./alugarLivroJaAlugadoPeloCliente');
 
-function validar(aluguel) {
-    //OK
-    clienteAlugouTresLivros.validar(aluguel)
-    //OK
+async function validar(aluguel) {
+    await clienteAlugouTresLivros.validar(aluguel)
     livroNaoEstaDisponivel.validar(aluguel)
-    //OK
-    alugarLivroJaAlugadoPeloCliente.validar(aluguel)
+    await alugarLivroJaAlugadoPeloCliente.validar(aluguel)
 }
 
 module.exports = {

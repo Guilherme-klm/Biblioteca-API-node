@@ -1,7 +1,7 @@
 const devolucaoLivroService = require('../service/devolucaoLivroService')
 const { ApiError } = require('../exception/apiError')
 
-function devolveLivro (req, res) {
+async function devolveLivro (req, res) {
     // #swagger.tags = ['Alugueis']
     // #swagger.description = 'Devolucao do livro'
     /* #swagger.responses[200] = {
@@ -13,7 +13,7 @@ function devolveLivro (req, res) {
             schema: { $ref: '#/definitions/MessageDTO' }
     } */
     try {
-        let devolucaoId = devolucaoLivroService.devolver(req.params.idAluguel)
+        let devolucaoId = await devolucaoLivroService.devolver(req.params.idAluguel)
         const responseBody = `{ message: 'Devolucao do livro feita com sucesso!', id: ${devolucaoId} }`
         res.json(responseBody);
     } catch(e) {

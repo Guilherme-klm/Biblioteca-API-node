@@ -1,44 +1,45 @@
-let autores = []
+const dbConfig = require('./dbConfig');
 
-function temAutoresCadastrados() {
-    return autores.length > 0
+async function temAutoresCadastrados() {
+    let client = await dbConfig.connect()
+
+    let result = await client.query("select count(*) as quantidade from autor limit 1")
+
+    client.release()
+    return result.rows[0].quantidade > 0
 }
 
-function mockAutores(mockAutores) {
-    autores = mockAutores
+async function inserir(newAutor) {
+    let client = await dbConfig.connect()
+
+    let result = await client.query(
+    "insert into autor(aut_nome, aut_origem) values($1, $2) returning aut_id as id", 
+    [newAutor.nome, newAutor.origem])
+
+    client.release()
+    return result.rows[0].id
 }
 
-function inserir(newAutor) {
-    newAutor.id = Math.floor(Math.random() * 100);
-    autores.push(newAutor)
-    return newAutor.id
+async function naoExisteAutor(idAutor) {
+    let client = await dbConfig.connect()
+
+    let result = await client.query("select count(*) as quantidade from autor where aut_id = $1", [idAutor])
+
+    client.release()
+    return result.rows[0].quantidade == "0"
 }
 
-function naoExisteAutor(idAutor) {
-    if (!temAutoresCadastrados()) {
-        return false
-    }
-    
-    return !autores.map(autor => autor.id).includes(idAutor)
-}
+async function existeAutor(novoAutor) {
+    let client = await dbConfig.connect()
 
-function existeAutor(novoAutor) {
-    if(!temAutoresCadastrados()) {
-        return false
-    }
+    let result = await client.query(
+        "select * from autor where aut_nome = $1 and aut_origem = $2", 
+        [novoAutor.nome, novoAutor.origem])
 
-    let existeAutor = false
-
-    autores.forEach(autor => {
-        if(autor.nome == novoAutor.nome && autor.origem == novoAutor.origem) {
-            existeAutor = true
-            return
-        }
-    })
-
-    return existeAutor
+    client.release()
+    return result.rows[0] != null
 }
 
 module.exports = {
-    existeAutor, temAutoresCadastrados, inserir, naoExisteAutor, mockAutores
+    existeAutor, temAutoresCadastrados, inserir, naoExisteAutor
 }

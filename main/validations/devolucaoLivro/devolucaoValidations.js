@@ -1,7 +1,7 @@
 const livroEstaComMulta = require('./livroEstaComMulta');
 
-function validar(aluguel) {
-    livroEstaComMulta.validar(aluguel)
+async function validar(aluguel) {
+    await livroEstaComMulta.validar(aluguel)
 }
 
 module.exports = {

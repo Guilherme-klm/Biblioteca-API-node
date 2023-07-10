@@ -10,7 +10,7 @@ const LivroController = require('./controller/livroController')
 const PagarMultaController = require('./controller/pagarMultaController')
 
 
-router.post('/alugueis/:idLivro', verificarLogin, AluguelController.insereAluguel)
+router.post('/alugueis', verificarLogin, AluguelController.insereAluguel)
 router.get('/alugueis', verificarLogin, AluguelController.buscaAlugueis)
 router.patch('/alugueis/:idAluguel/pagamentos', verificarLogin, PagarMultaController.pagarMulta)
 router.post('/autores', verificarLogin, AutorController.insereAutor)

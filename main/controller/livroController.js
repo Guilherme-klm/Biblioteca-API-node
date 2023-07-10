@@ -2,7 +2,7 @@ const cadastroLivroService = require('../service/cadastroLivroService')
 const bucarLivros = require('../service/buscarLivrosService')
 const { ApiError } = require('../exception/apiError')
 
-function buscaLivrosDisponiveis(req, res) {
+async function buscaLivrosDisponiveis(req, res) {
     // #swagger.tags = ['Livros']
     // #swagger.description = 'Busca todos os livros que estao disponiveis para ser alugado'
     /* #swagger.responses[200] = {
@@ -15,7 +15,7 @@ function buscaLivrosDisponiveis(req, res) {
     } */
 
     try {
-        res.json(bucarLivros.buscaLivrosDisponiveis())
+        res.json(await bucarLivros.buscaLivrosDisponiveis())
     } catch(e) {
         if(e instanceof ApiError) {
             res.status(e.statusCode)
@@ -27,7 +27,7 @@ function buscaLivrosDisponiveis(req, res) {
     }
 }
 
-function buscaLivros(req, res) {
+async function buscaLivros(req, res) {
     // #swagger.tags = ['Livros']
     // #swagger.description = 'Busca todos os livros cadastrados'
     /* #swagger.responses[200] = {
@@ -39,7 +39,7 @@ function buscaLivros(req, res) {
             schema: { $ref: '#/definitions/MessageDTO' }
     } */
     try {
-        res.json(bucarLivros.todos())
+        res.json(await bucarLivros.todos())
     } catch(e) {
         if(e instanceof ApiError) {
             res.status(e.statusCode)
@@ -51,7 +51,7 @@ function buscaLivros(req, res) {
     }
 }
 
-function buscaLivroPorIdAutor(req, res) {
+async function buscaLivroPorIdAutor(req, res) {
     // #swagger.tags = ['Livros']
     // #swagger.description = 'Busca os livros atraves do ID do autor passado como parametro da URL'
     /* #swagger.responses[200] = {
@@ -64,7 +64,7 @@ function buscaLivroPorIdAutor(req, res) {
     } */
     try {
         const id = req.params.idAutor
-        const livros = bucarLivros.porIdAutor(id)
+        const livros = await bucarLivros.porIdAutor(id)
         res.json(livros)
     } catch(e) {
         if(e instanceof ApiError) {
@@ -77,7 +77,7 @@ function buscaLivroPorIdAutor(req, res) {
     }
 }
 
-function buscaLivrosPorNome(req, res) {
+async function buscaLivrosPorNome(req, res) {
     // #swagger.tags = ['Livros']
     // #swagger.description = 'Busca os livros atraves do nome do livro passado como parametro da URL'
     /* #swagger.responses[200] = {
@@ -90,7 +90,7 @@ function buscaLivrosPorNome(req, res) {
     } */
     try {
         const nome = req.params.nome;
-        const livro = bucarLivros.porNomeLivro(nome)
+        const livro = await bucarLivros.porNomeLivro(nome)
         res.json(livro);
     } catch(e) {
         if(e instanceof ApiError) {
@@ -103,7 +103,7 @@ function buscaLivrosPorNome(req, res) {
     }
 }
 
-function insereLivro(req, res) {
+async function insereLivro(req, res) {
     // #swagger.tags = ['Livros']
     // #swagger.description = 'Cadastra livro'
     /* #swagger.parameters['livroDTI'] = {
@@ -122,7 +122,7 @@ function insereLivro(req, res) {
 
     try {
         const novoLivro = req.body
-        const isbn = cadastroLivroService.cadastrar(novoLivro)
+        const isbn = await cadastroLivroService.cadastrar(novoLivro)
         const responseBody = `{ message: 'Livro cadastrado com sucesso!', id: ${isbn} }`
         res.status(201)
         .json(responseBody);

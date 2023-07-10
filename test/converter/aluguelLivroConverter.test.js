@@ -8,7 +8,7 @@ afterEach(() => {
     jest.restoreAllMocks()
 })
 
-test("Deve converter aluguelDTO para dominio aluguel", () => {
+test("Deve converter aluguelDTO para dominio aluguel", async() => {
     let aluguelDTO = {
         idLivro: 1,
         matricula: 2
@@ -34,14 +34,14 @@ test("Deve converter aluguelDTO para dominio aluguel", () => {
     jest.spyOn(livroRepository, "buscarPorIdLivro").mockImplementation(() => mockLivro)
     jest.spyOn(clienteRepository, "buscaClientePorMatricula").mockImplementation(() => mockCliente)
 
-    let aluguel = converter(aluguelDTO)
+    let aluguel = await converter(aluguelDTO)
 
     let expectedAluguel = new Aluguel(true, mockLivro, "17/06/2023", "24/06/2023", mockCliente)
 
     expect(aluguel).toEqual(expectedAluguel)
 })
 
-test("Deve retornar erro quando nao tiver nenhum livro cadastrado no banco", () => {
+test("Deve retornar erro quando nao tiver nenhum livro cadastrado no banco", async() => {
     let aluguelDTO = {
         idLivro: 1,
         matricula: 2
@@ -49,10 +49,10 @@ test("Deve retornar erro quando nao tiver nenhum livro cadastrado no banco", () 
 
     jest.spyOn(livroRepository, "temLivrosCadastrados").mockImplementation(() => false)
 
-    expect(() => converter(aluguelDTO)).toThrow(new RecursoNaoEncontradoError("Livro nao existe"))
+    await converter(aluguelDTO).catch(e => expect(e.message).toMatch("Livro nao existe"))
 })
 
-test("Deve retornar erro quando o livro do aluguel for inexistente", () => {
+test("Deve retornar erro quando o livro do aluguel for inexistente", async () => {
     let aluguelDTO = {
         idLivro: 1,
         matricula: 2
@@ -61,10 +61,10 @@ test("Deve retornar erro quando o livro do aluguel for inexistente", () => {
     jest.spyOn(livroRepository, "temLivrosCadastrados").mockImplementation(() => true)
     jest.spyOn(livroRepository, "buscarPorIdLivro").mockImplementation(() => null)
 
-    expect(() => converter(aluguelDTO)).toThrow(new RecursoNaoEncontradoError("Livro nao existe"))
+    await converter(aluguelDTO).catch(e => expect(e.message).toMatch("Livro nao existe"))
 })
 
-test("Deve retornar erro o cliente do aluguel for inexistente", () => {
+test("Deve retornar erro o cliente do aluguel for inexistente", async() => {
     let aluguelDTO = {
         idLivro: 1,
         matricula: 2
@@ -83,5 +83,5 @@ test("Deve retornar erro o cliente do aluguel for inexistente", () => {
     jest.spyOn(livroRepository, "buscarPorIdLivro").mockImplementation(() => mockLivro)
     jest.spyOn(clienteRepository, "buscaClientePorMatricula").mockImplementation(() => null)
 
-    expect(() => converter(aluguelDTO)).toThrow(new RecursoNaoEncontradoError("Cliente nao encontrado"))
+    await converter(aluguelDTO).catch(e => expect(e.message).toMatch("Cliente nao encontrado"))
 })

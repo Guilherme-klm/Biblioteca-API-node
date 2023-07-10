@@ -1,7 +1,7 @@
 const aluguelLivrosService = require('../service/aluguelLivrosService')
 const { ApiError } = require('../exception/apiError')
 
-function insereAluguel(req, res) {
+async function insereAluguel(req, res) {
     // #swagger.tags = ['Alugueis']
     // #swagger.description = 'Cadastra aluguel'
     /* #swagger.parameters['livroDTI'] = {
@@ -19,8 +19,8 @@ function insereAluguel(req, res) {
     } */
 
     try {
-        let aluguelDTO = criaAluguelDTO(req)
-        let idAluguel = aluguelLivrosService.alugar(aluguelDTO)
+        let aluguelDTO = req.body
+        let idAluguel = await aluguelLivrosService.alugar(aluguelDTO)
         const responseBody = `{ message: 'Aluguel cadastrado com sucesso!', id: ${idAluguel} }`
         res.status(201).json(responseBody);
     } catch(e) {
@@ -34,7 +34,7 @@ function insereAluguel(req, res) {
     }
 }
 
-function buscaAlugueis(req, res) {
+async function buscaAlugueis(req, res) {
     // #swagger.tags = ['Alugueis']
     // #swagger.description = 'Cadastra aluguel'
     /* #swagger.responses[200] = {
@@ -45,14 +45,7 @@ function buscaAlugueis(req, res) {
             description: 'Servidor encontrou algum problema interno',
             schema: { $ref: '#/definitions/MessageDTO' }
     } */
-    res.json(aluguelLivrosService.todosAlugueis())
-}
-
-function criaAluguelDTO(req) {
-    if (req.body.idLivro == undefined || req.body.idLivro == null) {
-        req.body.idLivro = req.param.idLivro
-    }
-    return req.body
+    res.json(await aluguelLivrosService.todosAlugueis())
 }
 
 

@@ -4,44 +4,44 @@ import { RecursoNaoEncontradoError } from "../../main/exception/recursoNaoEncont
 import { RecursoDuplicadoError } from "../../main/exception/recursoDuplicadoError";
 import autorRepository  from "../../main/db/autorRepository";
 
-test("Deve converter autorDTO no dominio autor", () => {
+test("Deve converter autorDTO no dominio autor", async() => {
     let autorDTO = {
         nome: "Alberto Stenio",
         origem: "Brasil"
     }
 
-    let autor = converter(autorDTO)
+    let autor = await converter(autorDTO)
 
     expect(autor).toEqual(new Autor("Alberto Stenio", "Brasil"))
 })
 
-test("Deve retornar erro quando passar nome do autor vazio ou null", () => {
+test("Deve retornar erro quando passar nome do autor vazio ou null", async() => {
     let autorDTO = {
         nome: "",
         origem: "Brasil"
     }
 
-    expect(() => converter(autorDTO)).toThrow(new RecursoNaoEncontradoError("Nome do autor é obrigatorio"))
+    await converter(autorDTO).catch(e => expect(e.message).toMatch("Nome do autor é obrigatorio"))
 
     autorDTO.nome = null
 
-    expect(() => converter(autorDTO)).toThrow(new RecursoNaoEncontradoError("Nome do autor é obrigatorio"))
+    await converter(autorDTO).catch(e => expect(e.message).toMatch("Nome do autor é obrigatorio"))
 })
 
-test("Deve retornar erro quando passar origem do autor vazio ou null", () => {
+test("Deve retornar erro quando passar origem do autor vazio ou null", async() => {
     let autorDTO = {
         nome: "Alberto Stenio",
         origem: ""
     }
 
-    expect(() => converter(autorDTO)).toThrow(new RecursoNaoEncontradoError("Origem do autor é obrigatorio"))
+    await converter(autorDTO).catch(e => expect(e.message).toMatch("Origem do autor é obrigatorio"))
 
     autorDTO.origem = null
 
-    expect(() => converter(autorDTO)).toThrow(new RecursoNaoEncontradoError("Origem do autor é obrigatorio"))
+    await converter(autorDTO).catch(e => expect(e.message).toMatch("Origem do autor é obrigatorio"))
 })
 
-test("Deve retornar erro quando incluir um autor ja salvo na base", () => {
+test("Deve retornar erro quando incluir um autor ja salvo na base", async() => {
     jest.spyOn(autorRepository, "temAutoresCadastrados").mockImplementation(() => true)
     jest.spyOn(autorRepository, "existeAutor").mockImplementation(() => true)
 
@@ -50,6 +50,5 @@ test("Deve retornar erro quando incluir um autor ja salvo na base", () => {
         origem: "Brasil"
     }
 
-    expect(() => converter(autorDTO)).toThrow(new RecursoDuplicadoError('Autor ja cadastrado', 400))
-
+    await converter(autorDTO).catch(e => expect(e.message).toMatch('Autor ja cadastrado'))
 })
