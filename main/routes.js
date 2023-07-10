@@ -21,5 +21,6 @@ router.get('/livros/autores/:idAutor',verificarLogin, LivroController.buscaLivro
 router.get('/livros/disponiveis', verificarLogin, LivroController.buscaLivrosDisponiveis)
 router.get('/livros/nome/:nome', verificarLogin, LivroController.buscaLivrosPorNome)
 router.post('/livros', verificarLogin, LivroController.insereLivro)
+router.put('/livros/:idLivro', verificarLogin, LivroController.atualizaLivroTotal)
 
 module.exports = router

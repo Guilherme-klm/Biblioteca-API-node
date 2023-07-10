@@ -565,6 +565,60 @@
           }
         ]
       }
+    },
+    "/livros/{idLivro}": {
+      "put": {
+        "tags": [
+          "Livros"
+        ],
+        "description": "Atualiza todo o livro",
+        "parameters": [
+          {
+            "name": "idLivro",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "livroDTI",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LivroDTI"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso ao atualizar livro",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
+          },
+          "401": {
+            "description": "Falta das credenciais de autenticacao ou credenciais invalidas",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
+          },
+          "500": {
+            "description": "Servidor encontrou algum problema interno",
+            "schema": {
+              "$ref": "#/definitions/MessageDTO"
+            }
+          }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
+      }
     }
   },
   "definitions": {

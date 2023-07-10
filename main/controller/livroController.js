@@ -1,5 +1,6 @@
 const cadastroLivroService = require('../service/cadastroLivroService')
 const bucarLivros = require('../service/buscarLivrosService')
+const atualizaLivroService = require('../service/atualizaLivroService')
 const { ApiError } = require('../exception/apiError')
 
 async function buscaLivrosDisponiveis(req, res) {
@@ -137,6 +138,40 @@ async function insereLivro(req, res) {
     }
 }
 
+async function atualizaLivroTotal(req, res) {
+// #swagger.tags = ['Livros']
+    // #swagger.description = 'Atualiza todo o livro'
+    /* #swagger.parameters['livroDTI'] = {
+            in: 'body',
+            required: true,
+            schema: { $ref: '#/definitions/LivroDTI' }
+    }*/
+    /* #swagger.responses[200] = {
+            description: 'Sucesso ao atualizar livro',
+            schema: { $ref: '#/definitions/MessageDTO' }
+    } */
+    /* #swagger.responses[500] = {
+            description: 'Servidor encontrou algum problema interno',
+            schema: { $ref: '#/definitions/MessageDTO' }
+    } */
+
+    try {
+        const novoLivro = req.body
+        const isbn = await atualizaLivroService.atualizaTotal(req.params.idLivro, novoLivro)
+        const responseBody = `{ message: 'Livro atualizado com sucesso!', id: ${isbn} }`
+        res.status(200)
+        .json(responseBody);
+    } catch(e) {
+        if(e instanceof ApiError) {
+            res.status(e.statusCode)
+            .json(`{'message': ${e.message}}`)
+        } else {
+            res.status(500)
+            .json(`{'message': ${e.message}}`)
+        }
+    }
+}
+
 module.exports = {
-    buscaLivros, buscaLivroPorIdAutor, buscaLivrosPorNome, insereLivro, buscaLivrosDisponiveis
+    buscaLivros, buscaLivroPorIdAutor, buscaLivrosPorNome, insereLivro, buscaLivrosDisponiveis, atualizaLivroTotal
 }

@@ -113,7 +113,29 @@ async function inserir(newLivro) {
     return livroIsbn
 }
 
+async function atualizaTodoLivro(livroAtualizado) {
+    let client = await dbConfig.connect()
+
+    await client.query(
+        "update livro set lvr_nome = $1, lvr_editora = $2, lvr_anopublicacao = $3, lvr_quantidade = $4 where lvr_isbn = $5",
+        [
+            livroAtualizado.lvr_nome, livroAtualizado.lvr_editora, 
+            livroAtualizado.lvr_anopublicacao, livroAtualizado.lvr_quantidade,
+            livroAtualizado.lvr_isbn
+        ]
+    )
+
+    for await(const autor of livroAtualizado.autores) {
+        await client.query(
+            "update livroautor set aut_id = $1 where lvr_isbn = $2",
+            [autor, livroAtualizado.lvr_isbn]
+        )
+    }
+
+    client.release()
+}
+
 module.exports = {
     temLivrosCadastrados, existeLivro, inserir, buscarTodosLivros, buscarPorIdAutor, 
-    buscarPorNomeLivro, buscarPorIdLivro, buscaLivrosDisponiveis
+    buscarPorNomeLivro, buscarPorIdLivro, buscaLivrosDisponiveis, atualizaTodoLivro
 }
